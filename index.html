@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    <script   src="https://code.jquery.com/jquery-3.0.0.min.js"   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="   crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <title>Clock</title>
+<style media="screen">
+body {margin:0;padding: 0; font-family: 'Lobster', cursive; }
+  .wrap {width:100vw; height:100vh;background: linear-gradient(black, grey); /* Standard syntax */
+; position:relative; margin:0 auto;z-index: -99999; overflow: hidden; transition: 1s all;}
+  .watch {transition: 3s all;z-index: 1000;width:200px; height: 200px; border-radius: 150px; border:5px solid rgba(100,100,100,0.5);
+  position: absolute; top:50%; left:50%; margin-top:-110px; margin-left:-110px; background:black;}
+  .num12 {position: absolute; top:0px; left:87px; font-size:30px;
+    color:red;transition: 3s all;
+    text-shadow: 1px 1px 2px white, 0 0 25px red, 0 0 5px red;}
+  .num3 {position: absolute; top:80px; left:180px; font-size:30px; color:red;
+  text-shadow: 1px 1px 2px white, 0 0 25px red, 0 0 5px red;
+  transition: 3s all;}
+  .num6 {position: absolute; top:160px; left:92px;;  font-size:30px;
+    color:red; transition: 3s all;
+    text-shadow: 1px 1px 2px white, 0 0 25px red, 0 0 5px red;}
+  .num9 {position: absolute; top:80px; left:10px; font-size:30px;
+    color:red; transition: 3s all;
+    text-shadow: 1px 1px 2px white, 0 0 25px red, 0 0 5px red;}
+  .point {position: absolute; top:50%; left:50%; margin-left:-7.5px; margin-top: -7.5px; width:15px; height:15px; background:blue;
+  border-radius: 100px;box-shadow: inset 1px 1px 3px;}
+  .sec {
+    position: absolute; top:10px; left:50%;
+    margin-left:-1px; font-size:30px; background: red;
+    width:2px; height:90px; transform-origin: bottom;}
+    .min {
+      box-shadow: inset 1px 1px 3px;
+      position: absolute; top:30px; left:50%;
+      margin-left:-2.5px; font-size:30px; background: blue;
+      width:5px; height:70px; transform-origin: bottom;}
+      .hours {
+        box-shadow: inset 1px 1px 3px;
+        position: absolute; top:50px; left:50%;
+        margin-left:-2.5px; font-size:30px; background: purple;
+        width:5px; height:50px; transform-origin: bottom;}
+      .shadow {transition: 3s all; bottom:-60px; left:53px;border-radius:200px;width:100px; position: absolute; box-shadow: -1px 3px 70px 30px rgba(0,0,0,0.4);}
+      /*.strap {background: url("https://s-media-cache-ak0.pinimg.com/736x/c7/4e/15/c74e1507bd7eba3de21a4d2dc84a3cbf.jpg"); height:100vh; left:50%;
+      width:100px; margin-left: -55px;position: absolute; z-index: -100;
+      border:5px dotted rgba(240,100,150,0.4);}*/
+      .credits {font-size:12px; color:white; bottom: 10px; left:10px; position: absolute;}
+
+      .moon {animation:moonshine 10s infinite;display:none;top:50px; opacity: 0.5;left:50px;width:100px; height:100px; background:white; box-shadow: -1px 3px 30px 30px grey;  border-radius: 50%; position: absolute;}
+@keyframes moonshine {
+0% {box-shadow: -1px 3px 30px 30px rgba(100,100,100,1);}
+50% {box-shadow: -1px 3px 40px 50px rgba(0,100,100,0.3);}
+100% {box-shadow: -1px 3px 30px 30px rgba(100,100,100,1);}
+}
+
+@keyframes sunshine {
+0% {box-shadow: -1px 3px 30px 30px rgba(270,270,100,1);}
+50% {box-shadow: -1px 3px 40px 50px rgba(270,100,100,0.3);}
+100% {box-shadow: -1px 3px 30px 30px rgba(270,270,100,1);}
+}
+      .sun {animation:sunshine 10s infinite;display: none;top:50px; opacity: 0.5;left:50px;width:100px; height:100px; background:yellow; box-shadow: -1px 3px 30px 30px red;  border-radius: 50%; position: absolute;}
+      .the-time {display: none;position: absolute; bottom:10%; left:50%; margin-left: -50px;font-size: 60px; color:white;}
+</style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="moon"></div>
+      <div class="sun"></div>
+      <div class="the-time">12:00</div>
+
+      <div class="watch">
+        <div class="num12">12</div>
+
+      <div class="num3">3</div>
+      <div class="num6">6</div>
+      <div class="num9">9</div>
+      <div class="sec"></div>
+      <div class="min"></div>
+      <div class="hours"></div>
+
+
+      <div class="point"></div>
+      <div class="shadow"></div>
+      </div>
+      <div class="credits">Made By Yuri Blecher 2016</div>
+    </div>
+<script type="text/javascript">
+
+
+  function secMove() {
+
+    //the speed of the interval is actually not matter beacuse
+    //the system gets the min,sec,hour every certain time.
+    var date = new Date();
+    var sec = 6 * date.getSeconds();
+    var min = 6 * date.getMinutes();
+    var hour = 30 * (date.getHours() % 12 + date.getMinutes() / 60);
+
+    var dateC = new Date();
+    var h = dateC.getHours();
+    var m = dateC.getMinutes();
+    var s = dateC.getSeconds();
+if (m < 10) {
+  m = "0" + m ;
+}
+
+console.log(sec);
+    $(".sec").css({'transform':'rotate('+ sec +'deg)'});
+    $(".min").css({'transform':'rotate('+ min +'deg)'});
+    $(".hours").css({'transform':'rotate('+ hour +'deg)'});
+
+//moon or sun
+if(hour > 6 && hour < 18) {
+$(".wrap").css({"background":"linear-gradient(rgba(255,172,9,1),rgba(178,119,0,1))"})
+$(".sun").css({"display":"inline-block"})
+} else {
+$(".moon").css({"display":"inline-block"})
+$(".wrap").css({"background":"linear-gradient(black, grey)"})
+
+}
+
+//Seconds Highlight
+
+
+if (sec === 348) {
+
+  $(".watch").css({"box-shadow":"0 0 90px white"})
+  $(".num12").css({"color":"white"});
+} else if (sec === 12) {
+  $(".num12").css({"color":"red"});
+  $(".watch").css({"box-shadow":"none"})
+
+}
+
+if (sec === 84) {
+  $(".watch").css({"box-shadow":"0 0 15px white"})
+  $(".num3").css({"color":"white"});
+} else if (sec === 96) {
+  $(".num3").css({"color":"red"});
+  $(".watch").css({"box-shadow":"none"})
+
+}
+
+if (sec === 174) {
+  $(".watch").css({"box-shadow":"0 0 15px white"})
+  $(".num6").css({"color":"white"});
+} else if (sec === 186) {
+  $(".num6").css({"color":"red"});
+  $(".watch").css({"box-shadow":"none"})
+
+
+}
+
+if (sec === 264) {
+  $(".watch").css({"box-shadow":"0 0 15px white"})
+  $(".num9").css({"color":"white"});
+} else if (sec === 276) {
+  $(".num9").css({"color":"red"});
+  $(".watch").css({"box-shadow":"none"})
+
+
+}
+
+
+
+
+
+//watch jump every minute
+
+if (sec === 0) {
+  $(".the-time").html(h + ":" + m);
+  $(".the-time").fadeIn(2000);
+  $(".shadow").css({"box-shadow":"-1px 3px 50px 15px rgba(0,0,0,0.4)"})
+  $(".shadow").css({"bottom":"-83px"});
+  $(".watch").css({"top":"45%"});
+
+} else if (sec === 12) {
+  $(".watch").css({"top":"50%"});
+  $(".shadow").css({"bottom":"-60px"});
+  $(".shadow").css({"box-shadow":"-1px 3px 70px 31px rgba(0,0,0,0.4)"});
+  $(".the-time").fadeOut(2000);
+
+}
+
+  }
+
+function move() {
+$(".watch").animate(function(){
+
+});
+
+}
+
+  setInterval(secMove, 100);
+</script>
+  </body>
+</html>
