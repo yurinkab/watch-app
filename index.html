@@ -59,6 +59,8 @@ body {margin:0;padding: 0; font-family: 'Lobster', cursive; }
 }
       .sun {animation:sunshine 10s infinite;display: none;top:50px; opacity: 0.5;left:50px;width:100px; height:100px; background:yellow; box-shadow: -1px 3px 30px 30px red;  border-radius: 50%; position: absolute;}
       .the-time {display: none;position: absolute; bottom:10%; left:50%; margin-left: -50px;font-size: 60px; color:white;}
+      #degree {position: absolute; top:11%; left:180px; font-size: 30px; color:white;}
+
 </style>
   </head>
   <body>
@@ -66,6 +68,7 @@ body {margin:0;padding: 0; font-family: 'Lobster', cursive; }
       <div class="moon"></div>
       <div class="sun"></div>
       <div class="the-time">12:00</div>
+      <div id="degree"></div>
 
       <div class="watch">
         <div class="num12">12</div>
@@ -84,11 +87,24 @@ body {margin:0;padding: 0; font-family: 'Lobster', cursive; }
       <div class="credits">Made By Yuri Blecher 2016</div>
     </div>
 <script type="text/javascript">
+//ajax
+ var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+var json = JSON.parse(xhttp.responseText);
+var tempe = Math.floor(json.main.temp - 273.15);
+document.getElementById("degree").innerHTML = "Tel Aviv" + ", " + tempe + " C";
+    }
+  };
+  xhttp.open("GET", "http://api.openweathermap.org/data/2.5/weather?q=Telaviv,uk&appid=6c3eff0d22725e7cf2b040918d3a92a2", true);
+  xhttp.send();
+
 
 
   function secMove() {
 
-    //the speed of the interval is actually not matter beacuse
+
+    //the speed of the interval is actually doesnt matter beacuse
     //the system gets the min,sec,hour every certain time.
     var date = new Date();
     var sec = 6 * date.getSeconds();
