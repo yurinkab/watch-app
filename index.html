@@ -46,6 +46,7 @@ body {margin:0;padding: 0; font-family: 'Lobster', cursive; }
       .credits {font-size:12px; color:white; bottom: 10px; left:10px; position: absolute;}
 
       .moon {animation:moonshine 10s infinite;display:none;top:50px; opacity: 0.5;left:50px;width:100px; height:100px; background:white; box-shadow: -1px 3px 30px 30px grey;  border-radius: 50%; position: absolute;}
+	  
 @keyframes moonshine {
 0% {box-shadow: -1px 3px 30px 30px rgba(100,100,100,1);}
 50% {box-shadow: -1px 3px 40px 50px rgba(0,100,100,0.3);}
@@ -59,7 +60,10 @@ body {margin:0;padding: 0; font-family: 'Lobster', cursive; }
 }
       .sun {animation:sunshine 10s infinite;display: none;top:50px; opacity: 0.5;left:50px;width:100px; height:100px; background:yellow; box-shadow: -1px 3px 30px 30px red;  border-radius: 50%; position: absolute;}
       .the-time {display: none;position: absolute; bottom:10%; left:50%; margin-left: -50px;font-size: 60px; color:white;}
-      #degree {position: absolute; top:11%; left:180px; font-size: 30px; color:white;}
+      #degree {position: absolute; top:82px; left:180px; font-size: 30px; color:white;}
+	  .search {z-index:999999;position: absolute; right:50px; font-size: 19px; color:white; border:1px solid white; 
+	  border-radius:50px; width:200px; height:50px; padding-left:10px; padding-bottom:11px; background:none;top:70px;}
+
 
 </style>
   </head>
@@ -69,6 +73,7 @@ body {margin:0;padding: 0; font-family: 'Lobster', cursive; }
       <div class="sun"></div>
       <div class="the-time">12:00</div>
       <div id="degree"></div>
+      <input class="search" type="text">
 
       <div class="watch">
         <div class="num12">12</div>
